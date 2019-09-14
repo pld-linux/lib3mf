@@ -1,0 +1,12 @@
+--- lib3mf-1.8.1/lib3MF.pc.in~	2019-01-08 13:36:18.000000000 +0100
++++ lib3mf-1.8.1/lib3MF.pc.in	2019-09-14 14:02:54.652811189 +0200
+@@ -1,7 +1,7 @@
+ prefix=@CMAKE_INSTALL_PREFIX@
+ exec_prefix=@CMAKE_INSTALL_PREFIX@
+-libdir=${exec_prefix}/@CMAKE_INSTALL_LIBDIR@
+-includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
++libdir=@CMAKE_INSTALL_LIBDIR@
++includedir=@CMAKE_INSTALL_INCLUDEDIR@
+ 
+ Name: @PROJECT_NAME@
+ Description: @PROJECT_DESCRIPTION@
