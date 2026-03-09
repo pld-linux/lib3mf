@@ -4,16 +4,19 @@
 #
 Summary:	Implementation of the 3D Manufacturing Format file standard
 Name:		lib3mf
-Version:	1.8.1
+Version:	2.5.0
 Release:	1
 License:	BSD
 Group:		Libraries
 Source0:	https://github.com/3MFConsortium/lib3mf/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	39dc08572cf5d080d3f15a66d99c3efb
-Patch0:		pkgconfig.patch
+# Source0-md5:	43da209fe1b28464ea6f93fb7697d187
+Patch0:		fast-float-include-path.patch
 URL:		https://3mf.io/
 BuildRequires:	cmake
+BuildRequires:	libzip-devel
 BuildRequires:	ossp-uuid-devel
+BuildRequires:	openssl-devel
+BuildRequires:	zlib-devel
 %{?with_tests:BuildRequires:	googletest}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -50,9 +53,13 @@ Pliki nagłówkowe biblioteki %{name}.
 mkdir -p build
 cd  build
 %{cmake} ../ \
-	-DCMAKE_INSTALL_INCLUDEDIR:PATH=%{_includedir}/lib3MF \
-	%{cmake_on_off tests LIB3MF_TESTS}
-%{__make}
+		-DUSE_INCLUDED_ZLIB=OFF \
+		-DUSE_INCLUDED_LIBZIP=OFF \
+		-DUSE_INCLUDED_SSL=OFF \
+		-DSTRIP_BINARIES=OFF \
+		-DCMAKE_INSTALL_INCLUDEDIR:PATH=%{_includedir}/lib3MF \
+		%{cmake_on_off tests LIB3MF_TESTS}
+	%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -69,12 +76,13 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README.md
-%attr(755,root,root) %{_libdir}/lib3MF.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/lib3MF.so.1
+%attr(755,root,root) %{_libdir}/lib3mf.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/lib3mf.so.2
 
 %files devel
 %defattr(644,root,root,755)
-%doc CONTRIBUTING.md Lib3MF-1.pdf
-%attr(755,root,root) %{_libdir}/lib3MF.so
+%doc CONTRIBUTING.md
+%attr(755,root,root) %{_libdir}/lib3mf.so
 %{_includedir}/lib3MF
-%{_pkgconfigdir}/lib3MF.pc
+%{_pkgconfigdir}/lib3mf.pc
+%{_libdir}/cmake/lib3mf
