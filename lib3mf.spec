@@ -7,7 +7,7 @@ Summary:	Implementation of the 3D Manufacturing Format file standard
 Summary(pl.UTF-8):	Implementacja standardu plików 3D Manufacturing Format
 Name:		lib3mf
 Version:	2.5.0
-Release:	2
+Release:	3
 License:	BSD
 Group:		Libraries
 #Source0Download: https://github.com/3MFConsortium/lib3mf/releases
