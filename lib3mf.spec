@@ -1,4 +1,4 @@
-# TODO: system cpp-base64, fast_float?
+# TODO: system cpp-base64?
 #
 # Conditional build:
 %bcond_with	tests		# test suite
@@ -13,19 +13,21 @@ Group:		Libraries
 #Source0Download: https://github.com/3MFConsortium/lib3mf/releases
 Source0:	https://github.com/3MFConsortium/lib3mf/archive/v%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	43da209fe1b28464ea6f93fb7697d187
-Patch0:		fast-float-include-path.patch
 Patch1:		cmake.patch
 Patch2:		pkgconfig.patch
 URL:		https://3mf.io/
 BuildRequires:	cmake >= 3.10
+BuildRequires:	fast_float-devel >= 6.0.0
 BuildRequires:	libstdc++-devel >= 6:7
-BuildRequires:	libzip-devel
-BuildRequires:	ossp-uuid-devel
-BuildRequires:	openssl-devel
+BuildRequires:	libzip-devel >= 1.10.1
+BuildRequires:	libuuid-devel
+%{?with_tests:BuildRequires:	openssl-devel}
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 2.047
-BuildRequires:	zlib-devel
-%{?with_tests:BuildRequires:	googletest}
+BuildRequires:	zlib-devel >= 1.3.1
+%{?with_tests:BuildRequires:	googletest >= 1.14.0}
+Requires:	libzip >= 1.10.1
+Requires:	zlib >= 1.3.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -59,9 +61,10 @@ Summary:	Header files for %{name} library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki %{name}
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	fast_float-devel >= 6.0.0
 Requires:	libstdc++-devel >= 6:7
-Requires:	libzip-devel
-Requires:	zlib-devel
+Requires:	libzip-devel >= 1.10.1
+Requires:	zlib-devel >= 1.3.1
 
 %description devel
 Header files for %{name} library.
@@ -71,9 +74,10 @@ Pliki nagłówkowe biblioteki %{name}.
 
 %prep
 %setup -q
-%patch -P0 -p1
 %patch -P1 -p1
 %patch -P2 -p1
+
+%{__rm} -r Libraries/{fast_float,googletest,libressl,libzip,zlib}
 
 %build
 mkdir -p build
@@ -82,9 +86,11 @@ cd build
 	-DCMAKE_INSTALL_INCLUDEDIR:PATH=%{_includedir}/lib3MF \
 	-DLIB3MF_TESTS=%{__ON_OFF tests} \
 	-DSTRIP_BINARIES=OFF \
+	-DUSE_INCLUDED_FASTFLOAT=OFF \
 	-DUSE_INCLUDED_LIBZIP=OFF \
 	-DUSE_INCLUDED_SSL=OFF \
-	-DUSE_INCLUDED_ZLIB=OFF
+	-DUSE_INCLUDED_ZLIB=OFF \
+	-DUSE_PLATFORM_UUID=ON
 
 %{__make}
 
