@@ -1,0 +1,10 @@
+--- lib3mf-2.5.0/Include/Model/Classes/NMR_ModelTriangleSet.h.orig	2026-02-24 18:23:52.000000000 +0100
++++ lib3mf-2.5.0/Include/Model/Classes/NMR_ModelTriangleSet.h	2026-10-11 13:47:56.675515067 +0200
+@@ -34,6 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBI
+ #include "Model/Classes/NMR_ModelResource.h" 
+ #include "Model/Classes/NMR_Model.h"
+ #include "Common/Platform/NMR_ImportStream.h"  
++#include <cstdint>
+ #include <set>
+ 
+ 

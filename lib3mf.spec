@@ -13,6 +13,7 @@ Group:		Libraries
 #Source0Download: https://github.com/3MFConsortium/lib3mf/releases
 Source0:	https://github.com/3MFConsortium/lib3mf/archive/v%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	43da209fe1b28464ea6f93fb7697d187
+Patch0:		%{name}-includes.patch
 Patch1:		cmake.patch
 Patch2:		pkgconfig.patch
 URL:		https://3mf.io/
@@ -74,6 +75,7 @@ Pliki nagłówkowe biblioteki %{name}.
 
 %prep
 %setup -q
+%patch -P0 -p1
 %patch -P1 -p1
 %patch -P2 -p1
 
