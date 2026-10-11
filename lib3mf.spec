@@ -15,6 +15,7 @@ Source0:	https://github.com/3MFConsortium/lib3mf/archive/v%{version}/%{name}-%{v
 # Source0-md5:	43da209fe1b28464ea6f93fb7697d187
 Patch0:		fast-float-include-path.patch
 Patch1:		cmake.patch
+Patch2:		pkgconfig.patch
 URL:		https://3mf.io/
 BuildRequires:	cmake >= 3.10
 BuildRequires:	libstdc++-devel >= 6:7
@@ -72,6 +73,7 @@ Pliki nagłówkowe biblioteki %{name}.
 %setup -q
 %patch -P0 -p1
 %patch -P1 -p1
+%patch -P2 -p1
 
 %build
 mkdir -p build
